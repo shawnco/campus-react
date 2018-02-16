@@ -1,0 +1,10 @@
+.menu-button {
+    width: 75px;
+    height: 75px;
+    line-height: 75px;
+    background-color: #0000ff;
+    color: #ffffff;
+    display: inline-block;
+    margin: 5px;
+    text-align: center;
+}
