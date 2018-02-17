@@ -4,7 +4,7 @@ import {DataTable} from 'primereact/components/datatable/DataTable';
 import {Column} from 'primereact/components/column/Column';
 import BuildingService from '../../services/building.js';
 import {fetchBuilding, fetchClasses, fetchRooms} from '../../actions/buildingsActions';
-import {getUser} from '../../actions/userActions';
+import {getUser, setErrorMsg} from '../../actions/userActions';
 import {Redirect} from 'react-router';
 
 class ConnectedBuilding extends Component {
@@ -16,6 +16,12 @@ class ConnectedBuilding extends Component {
     }
     
     componentWillMount(){
+        var level = this.props.user.user.level;
+        if(level < 300)
+        {
+            console.log('here')
+            this.props.dispatch(setErrorMsg("You don't have permission to view that page"));        
+        }
         var that = this;
         this.service.getBuilding(this.props.match.params.id).then(response => {
             that.props.dispatch(fetchBuilding(response.data));

@@ -30,6 +30,6 @@ class ConnectedMajors extends Component {
     }
 }
 const Majors = connect((store) => {
-    store.majors
+    return store.majors
 })(ConnectedMajors);
 export default Majors;

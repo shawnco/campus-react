@@ -7,7 +7,19 @@ export function fetchUser(user){
 
 export function getUser(){
     return {
-        type: "GET_USER",
-        payload: {}
-    }
+        type: "GET_USER"
+    };
+}
+
+export function setErrorMsg(msg){
+    return {
+        type: "SET_ERROR_MSG",
+        payload: msg
+    };
+}
+
+export function getErrorMsg(){
+    return {
+        type: "GET_ERROR_MSG"
+    };
 }

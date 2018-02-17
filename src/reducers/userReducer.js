@@ -1,11 +1,16 @@
 export default function reducer(state = {
-    user: {}
+    user: {},
+    errorMsg: ''
 }, action){
     switch (action.type){
         case "FETCH_USER":
             return {...state, user: action.payload};
         case "GET_USER":
             return state;
+        case "FETCH_ERROR_MSG":
+            return state;
+        case "SET_ERROR_MSG":
+            return {...state, errorMsg: action.payload}
         default:
             return state;
     }

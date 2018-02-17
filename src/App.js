@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import {connect} from 'react-redux';
-import {Route} from 'react-router-dom';
+import {Route, withRouter} from 'react-router-dom';
 import Header from './components/header/Header';
 import Menu from './components/menu/Menu';
 import Classes from './components/classes/Classes';
@@ -9,6 +9,7 @@ import Majors from './components/majors/Majors';
 import Home from './components/home/Home';
 import Buildings from './components/buildings/Buildings';
 import Building from './components/building/Building';
+import Alert from './components/alert/Alert';
 import UserService from './services/user.js';
 import {fetchUser} from './actions/userActions';
 
@@ -36,6 +37,9 @@ class ConnectedApp extends Component {
                         </div>
                         {this.makeMenu()}
                         <div className="col-xs-12">
+                            <Alert />
+                        </div>
+                        <div className="col-xs-12">
                             <Route path="/home" component={Home} />
                             <Route path="/classes" component={Classes} />
                             <Route path="/majors" component={Majors} />
@@ -60,7 +64,7 @@ class ConnectedApp extends Component {
         }
     }
 }
-const App = connect((store) => {
+const App = withRouter(connect((store) => {
     return store.user;
-})(ConnectedApp);
+})(ConnectedApp));
 export default App;
