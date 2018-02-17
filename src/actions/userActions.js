@@ -23,3 +23,10 @@ export function getErrorMsg(){
         type: "GET_ERROR_MSG"
     };
 }
+
+export function getProfessorSections(id){
+    return {
+        type: "GET_PROFESSOR_SECTIONS",
+        payload: id
+    };
+}

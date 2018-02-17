@@ -11,6 +11,8 @@ export default function reducer(state = {
             return state;
         case "SET_ERROR_MSG":
             return {...state, errorMsg: action.payload}
+        case "GET_PROFESSOR_SECTIONS":
+            return {...state, sections: action.payload}
         default:
             return state;
     }

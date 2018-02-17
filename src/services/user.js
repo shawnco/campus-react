@@ -10,5 +10,9 @@ class UserService {
     getUser(id) {
         return axios.get(this.api + 'user/' + id);
     }
+
+    getProfessorSections(id){
+        return axios.get(this.api + 'professor/sections/' + id);
+    }
 }
 export default UserService;

@@ -108,3 +108,15 @@ select distinct c.name, b.id from class as c
 left join section as s on c.id = s.class_id
 left join room as r on r.id = s.room
 left join building as b on r.building_id = b.id
+
+-- Get all sections taught by a professor
+
+create view v_professor_section as
+select
+s.id as section_id,
+s.professor_id as professor_id,
+code,
+name
+from section as s
+left join class as c
+on s.class_id = c.id

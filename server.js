@@ -94,6 +94,19 @@ app.get('/pages/:level', function(req, res) {
     });
 });
 
+// ---- PROFESSOR
+app.get('/professor/sections/:id', function(req, res){
+    var id = req.params.id;
+    db.all("SELECT * FROM v_professor_section WHERE professor_id = ?", [id], function(err, rows){
+        if(err){
+            console.log(err);
+            res.end(JSON.stringify(false));
+        }else{
+            res.end(JOSN.stringify(rows));
+        }
+    })
+})
+
 // ---- ROOMS
 app.get('/rooms/:building', function(req, res) {
     var building = req.params.building;
