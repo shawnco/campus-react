@@ -70,6 +70,27 @@ app.get('/classes/list', function (req, res) {
     });
 });
 
+// FLOWCHART
+app.get('/flowchart/:id', function(req, res){
+    var id = req.params.id;
+    db.all("SELECT * FROM class_dependency WHERE major_id = ?", [id], function(err,rows){
+        if(err){
+            console.log(err);
+            res.end(JSON.stringify(false));
+        }else{
+            db.all("SELECT * FROM major_dependency WHERE major_id = ?", [id], function(err,rows2){
+                if(err){
+                    console.log(err);
+                    res.end(JSON.stringify(false));
+                }else{
+                    // need to merge the two together
+                    res.end(JSON.stringify(rows.concat(rows2)));
+                }
+            })
+        }
+    })
+})
+
 // ---- MAJORS
 app.get('/majors/list', function (req, res) {
     db.all("SELECT * FROM major", function (err, rows) {

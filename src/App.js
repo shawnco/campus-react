@@ -10,6 +10,8 @@ import Manage from './components/manage/Manage';
 import Home from './components/home/Home';
 import Buildings from './components/buildings/Buildings';
 import Building from './components/building/Building';
+import Section from './components/section/Section';
+import Flowchart from './components/flowchart/Flowchart';
 import UserService from './services/user.js';
 import {fetchUser} from './actions/userActions';
 
@@ -21,7 +23,7 @@ class ConnectedApp extends Component {
 
     componentDidMount() {
         var that = this;
-        this.service.getUser(4).then(response => {
+        this.service.getUser(1).then(response => {
             that.props.dispatch(fetchUser(response.data));
         });
     }
@@ -45,6 +47,8 @@ class ConnectedApp extends Component {
                             <Route path="/buildings" component={Buildings} />
                             <Route path="/building/:id" component={Building} />
                             <Route path="/manage" component={Manage} />
+                            <Route path="/section/:id" component={Section} />
+                            <Route path="/flowchart" component={Flowchart} />
                         </div>
                     </div>
                 </div>
