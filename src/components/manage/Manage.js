@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {DataTable} from 'primereact/components/datatable/DataTable';
 import {Column} from 'primereact/components/column/Column';
 import {getUser} from '../../actions/userActions';
+import {fetchSections} from '../../actions/manageActions';
 import UserService from '../../services/user.js';
 
 class ConnectedManage extends Component {
@@ -12,24 +13,49 @@ class ConnectedManage extends Component {
     }
 
     componentWillMount(){
-        // get the user's id, then retrieve classes taught by them
         this.props.dispatch(getUser());
-        console.log(this.props)
+        var level = this.props.user.user.level;
+        if(level < 200){
+            console.log('get out');
+        }else{
+            console.log('you can say',this.props.user.user.id);
+            var id = this.props.user.user.id;
+            var that = this;
+            this.service.getProfessorSections(id).then(response => {
+                that.props.dispatch(fetchSections(response.data));
+            });
+        }
     }
 
     render() {
-        console.log(this.props)
         return (<div className="panel">
             <div className="panel-heading">Classes You Teach</div>
             <div className="panel-body">
-                <DataTable value={this.props.majors}>
-                    <Column field="name" header="Name" />
-                </DataTable>
+                {this.renderClasses()}
             </div>
         </div>);
     }
+
+    renderClasses(){
+        console.log('PROPS ARE',this.props)
+        if(this.props.sections !== undefined){
+            return (
+                <DataTable value={this.props.sections}>
+                    <Column field="name" header="Name" />
+                    <Column field="code" header="Code" />
+                    <Column field="section_letter" header="Section" />
+                </DataTable>
+            )
+        }else{
+            return <p></p>;
+        }
+    }
 }
 const Manage = connect((store) => {
-    return store.majors
+    console.log('STORE SAYS',store)
+    return {
+        user: store.user,
+        sections: store.manage.sections
+    }
 })(ConnectedManage);
 export default Manage;

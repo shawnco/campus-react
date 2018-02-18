@@ -120,3 +120,7 @@ name
 from section as s
 left join class as c
 on s.class_id = c.id
+
+UPDATE section
+SET section_letter = 'A'
+WHERE id = 1

@@ -102,7 +102,7 @@ app.get('/professor/sections/:id', function(req, res){
             console.log(err);
             res.end(JSON.stringify(false));
         }else{
-            res.end(JOSN.stringify(rows));
+            res.end(JSON.stringify(rows));
         }
     })
 })

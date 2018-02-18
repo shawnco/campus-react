@@ -10,7 +10,6 @@ import Manage from './components/manage/Manage';
 import Home from './components/home/Home';
 import Buildings from './components/buildings/Buildings';
 import Building from './components/building/Building';
-import Alert from './components/alert/Alert';
 import UserService from './services/user.js';
 import {fetchUser} from './actions/userActions';
 
@@ -22,7 +21,7 @@ class ConnectedApp extends Component {
 
     componentDidMount() {
         var that = this;
-        this.service.getUser(1).then(response => {
+        this.service.getUser(4).then(response => {
             that.props.dispatch(fetchUser(response.data));
         });
     }
@@ -38,7 +37,6 @@ class ConnectedApp extends Component {
                         </div>
                         {this.makeMenu()}
                         <div className="col-xs-12">
-                            <Alert />
                         </div>
                         <div className="col-xs-12">
                             <Route path="/home" component={Home} />
