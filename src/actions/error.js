@@ -1,0 +1,1 @@
+export const GET_ERROR_MSG = 'get_error_msg';
