@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {getErrorMsg} from '../../actions/userActions';
 import {connect} from 'react-redux';
 
 class Alert extends Component {

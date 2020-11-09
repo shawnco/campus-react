@@ -2,104 +2,93 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {DataTable} from 'primereact/components/datatable/DataTable';
 import {Column} from 'primereact/components/column/Column';
-import BuildingService from '../../services/building.js';
-import {fetchBuilding, fetchClasses, fetchRooms} from '../../actions/buildingsActions';
-import {getUser, setErrorMsg} from '../../actions/userActions';
 import {Redirect} from 'react-router';
+import {getBuilding} from '../../actions/buildings';
+import {getClasses} from '../../actions/classes';
+import {getRooms} from '../../actions/rooms';
+import {setErrorMsg} from '../../actions/error';
+import {getUser} from '../../actions/user';
 
-class ConnectedBuilding extends Component {
-    service = new BuildingService();
+class Building extends Component {
     constructor(props) {
         super(props);
-        console.log('hi?')
-        var that = this;        
-    }
-    
-    componentWillMount(){
-        var level = this.props.user.user.level;
-        if(level < 300)
-        {
-            console.log('here')
-            this.props.dispatch(setErrorMsg("You don't have permission to view that page"));        
-        }
-        var that = this;
-        this.service.getBuilding(this.props.match.params.id).then(response => {
-            that.props.dispatch(fetchBuilding(response.data));
-        });
-        this.service.getClasses(this.props.match.params.id).then(response => {
-            that.props.dispatch(fetchClasses(response.data));
-        });
-        this.service.getRooms(this.props.match.params.id).then(response => {
-            that.props.dispatch(fetchRooms(response.data));
-        });
-        this.props.dispatch(getUser());
     }
 
-    renderName(){
-        if(this.props.building){
+    componentDidMount() {
+        const level = _.get(this.props, 'user.user.level', 0);
+        const id = _.get(this.props, 'match.params.id', null);
+        if (level < 300) {
+            this.props.getBuilding(id);
+            this.props.getClasses(id);
+            this.props.getRooms(id);
+        }
+        this.props.getUser()
+    }
+
+    renderName() {
+        if (this.props.building) {
             return this.props.building.name;
+        } else {
+            return null;
         }
     }
 
-    renderRoomTable(){
-        if(this.props.rooms){
-            return (
-                <div className="panel">
-                    <div className="panel-heading">{this.renderName()}</div>
-                    <div className="panel-body">
-                        <DataTable value={this.props.rooms}>
-                            <Column field="number" header="Number" />
-                            <Column field="capacity" header="Capacity" />
-                        </DataTable>
-                    </div>
+    renderRoomTable() {
+        if (this.props.rooms) {
+            return <div className='panel'>
+                <div className='panel-heading'>{this.renderName()}</div>
+                <div className='panel-body'>
+                    <DataTable value={this.props.rooms}>
+                        <Column field='number' header='Number' />
+                        <Column field='capacity' header='Capacity' />
+                    </DataTable>
                 </div>
-            )
+            </div>
+        } else {
+            return null;
         }
     }
 
-    renderClassesTable(){
-        if(this.props.classes){
-            return (
-                <div className="panel">
-                    <div className="panel-heading">Classes</div>
-                    <div className="panel-body">
-                        <DataTable value={this.props.classes}>
-                            <Column field="name" header="Name" />
-                        </DataTable>
-                    </div>
+    renderClassesTable() {
+        if (this.props.classes) {
+            return <div className='panel'>
+                <div className='panel-heading'>Classes</div>
+                <div className='panel-body'>
+                    <DataTable value={this.props.classes}>
+                        <Column field='name' header='Name' />
+                    </DataTable>
                 </div>
-            );
+            </div>
+        } else {
+            return null;
         }
     }
 
     render() {
-        console.log(this.props.user.user)
-        if(this.props.user.user.level){
-            // If the level is below 300, kick them out
-            var level = this.props.user.user.level;
-            if(level < 300){
-                return <Redirect to="/home"></Redirect>
-            }else{
-                return (
-                    <div>
-                        {this.renderRoomTable()}
-                        {this.renderClassesTable()}
-                    </div>
-                );
-            }
-        }else{
-            return <div></div>;
+        const level = _.get(this.props, 'user.user.level', 0);
+        if (level) {
+            return <div>
+                {this.renderRoomTable()}
+                {this.renderClassesTable()}
+            </div>
+        } else {
+            return <Redirect to='/home' />
         }
+    }   
+}
 
-
+const mapStateToProps = ({buildings, classes, rooms}) => {
+    return {
+        building: buildings.building,
+        classes: classes.classes,
+        rooms: rooms.rooms,
+        user: user
     }
 }
-const Building = connect((store) => {
-    return {
-        building: store.buildings.building,
-        classes: store.buildings.classes,
-        rooms: store.buildings.rooms,
-        user: store.user
-    };
-})(ConnectedBuilding);
-export default Building;
+
+export default connect(mapStateToProps, { 
+    getBuilding,
+    getClasses,
+    getRooms,
+    setErrorMsg
+})(Building);

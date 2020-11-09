@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {api_url} from './config.json';
 
-export default class Request {
+export default class Api {
     static get(url, data) {
         return axios.get(api_url + url, data);
     }

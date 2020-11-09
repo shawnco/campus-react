@@ -5,37 +5,33 @@ import {Column} from 'primereact/components/column/Column';
 import BuildingsService from '../../services/buildings.js';
 import {Link} from 'react-router-dom';
 
-
-class ConnectedBuildings extends Component {
-    service = new BuildingsService();
+class Buildings extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
-        var that = this;
-        this.service.listBuildings().then(response => {
-            that.setState({buildings: response.data});
-        });
     }
 
     nameTemplate(row, column) {
-        var route = '/building/' + row.id;
+        const route = `/building/${row.id}`;
         return <Link to={route}>{row.name}</Link>
     }
 
     render() {
-        return (<div className="panel">
-            <div className="panel-heading">Buildings</div>
-            <div className="panel-body">
+        const {buildings} = this.props;
+        return <div className='panel'>
+            <div className='panel-heading'>Buildings</div>
+            <div className='panel-body'>
                 <DataTable value={this.state.buildings}>
-                    <Column field="name" header="Name" body={this.nameTemplate} />
+                    <Column field='name' header='Name' body={this.nameTemplate} />
                 </DataTable>
             </div>
-        </div>);
+        </div>            
     }
 }
-const Buildings = connect((store) => {
+
+const mapStateToProps = ({buildings}) => {
     return {
-        buildings: store.buildings
+        buildings: buildings.buildings
     };
-})(ConnectedBuildings);
-export default Buildings;
+}
+
+export default connect(mapStateToProps, null)(Buildings);

@@ -12,7 +12,7 @@ app.use(function(req, res, next) {
     next();
 });
 
-var db = new sqlite3.Database('db/campus-react.db');
+var db = new sqlite3.Database('server/db/campus-react.db');
 
 app.get('/ping', function (req, res) {
  return res.send('pong');
