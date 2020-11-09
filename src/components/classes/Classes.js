@@ -2,45 +2,38 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {DataTable} from 'primereact/components/datatable/DataTable';
 import {Column} from 'primereact/components/column/Column';
-import ClassesService from '../../services/classes.js';
-import {fetchClasses} from '../../actions/classesActions';
-import {getUser} from '../../actions/userActions';
+import {getClasses} from '../../actions/classes';
+import {getUser} from '../../actions/user';
 
-export class ConnectedClasses extends Component {
-    service = new ClassesService();
+class Classes extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
     }
 
-    componentDidMount(){
-
-        var that = this;
-        this.service.listClasses().then(response => {
-            that.props.dispatch(fetchClasses(response.data));
-        }); 
-        this.props.dispatch(getUser());
+    componentDidMount() {
+        this.props.getClasses();
     }
 
     render() {
-        // Kick them back to the home page if they don't have the credentials to view
-        console.log(this.props.user.user.level)
-
-
-        return (<div className="panel">
-            <div className="panel-heading">Classes</div>
-            <div className="panel-body">
+        return <div className='panel'>
+            <div className='panel-heading'>Classes</div>
+            <div className='panel-body'>
                 <DataTable value={this.props.classes.classes}>
-                    <Column field="name" header="Name" />
+                    <Column field='name' header='Name' />
                 </DataTable>
             </div>
-        </div>);
+        </div>
     }
 }
-const Classes = connect((store) => {
+
+const mapStateToProps = ({classes, user}) => {
     return {
-        classes: store.classes,
-        user: store.user
+        classes: classes.classes,
+        user: user.user
     };
-})(ConnectedClasses);
-export default Classes;
+}
+
+export default connect(mapStateToProps, {
+    getClasses,
+    getUser
+})(Classes);

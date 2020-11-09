@@ -1,8 +1,8 @@
 export const GET_CLASSES = 'get_classes';
 
-export function getClasses(id) {
+export function getClasses() {
     return dispatch => {
-        Api.get(`building/${id}/classes`).then(res => {
+        Api.get(`classes/list`).then(res => {
             return dispatch({
                 type: GET_CLASSES,
                 payload: res.data

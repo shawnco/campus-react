@@ -1,33 +1,34 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import MenuButton from '../menubutton/MenuButton.js';
 import './Menu.css';
-import UserService from '../../services/user.js';
+import {getPages} from '../../actions/user';
 
 class Menu extends Component {
-    service = new UserService();
     constructor(props) {
         super(props);
-        this.state = {
-            pages: []
-        };
     }
 
     componentDidMount() {
         // Get the pages for this user
-        var that = this;
-        this.service.getPages(this.props.level).then(response => {
-            that.setState({pages: response.data});
-        });
+        this.props.getPages();
     }
 
     render() {
-        return (
-            <div className="col-xs-12 menu">
-                {this.state.pages.map((value, index) => {
-                    return <MenuButton route={value.route} name={value.name} index={value.name} key={index.toString()} />
-                })}
-            </div>
-        )
+        return <div className="col-xs-12 menu">
+            {this.state.pages.map((value, index) => {
+                return <MenuButton route={value.route} name={value.name} index={value.name} key={index.toString()} />
+            })}
+        </div>
     }
 }
-export default Menu;
+
+const mapStateToProps = ({user}) => {
+    return {
+        pageS: user.pages
+    }
+}
+
+export default connect(mapStateToProps, {
+    getPages
+})(Menu);

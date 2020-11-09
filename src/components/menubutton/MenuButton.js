@@ -8,7 +8,7 @@ class MenuButton extends Component {
     }
 
     render() {
-        return <Link to={this.props.route} key={this.props.index.toString()}>
+        return <Link to={this.props.route} key={this.props.index}>
             <div className='menu-button'>
                 {this.props.name}
             </div>
