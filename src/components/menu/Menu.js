@@ -25,7 +25,7 @@ class Menu extends Component {
 
 const mapStateToProps = ({user}) => {
     return {
-        pageS: user.pages
+        pages: user.pages
     }
 }
 

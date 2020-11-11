@@ -1,9 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import FlowchartService from '../../services/flowchart.js';
 
 class ConnectedFlowchart extends Component {
-    service = new FlowchartService();
     constructor(props) {
         super(props);
     }

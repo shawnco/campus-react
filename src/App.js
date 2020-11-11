@@ -6,26 +6,21 @@ import Header from './components/header/Header';
 import Menu from './components/menu/Menu';
 import Classes from './components/classes/Classes';
 import Majors from './components/majors/Majors';
-import Manage from './components/manage/Manage';
+// import Manage from './components/manage/Manage';
 import Home from './components/home/Home';
 import Buildings from './components/buildings/Buildings';
-import Building from './components/building/Building';
+// import Building from './components/building/Building';
 import Section from './components/section/Section';
 import Flowchart from './components/flowchart/Flowchart';
-import UserService from './services/user.js';
-import {fetchUser} from './actions/userActions';
+import {getUser} from './actions/user';
 
-class ConnectedApp extends Component {
-    service = new UserService();
+class App extends Component {
     constructor(props) {
         super(props);
     }
 
     componentDidMount() {
-        var that = this;
-        this.service.getUser(1).then(response => {
-            that.props.dispatch(fetchUser(response.data));
-        });
+        this.props.getUser(1);
     }
 
 
@@ -45,8 +40,8 @@ class ConnectedApp extends Component {
                             <Route path="/classes" component={Classes} />
                             <Route path="/majors" component={Majors} />
                             <Route path="/buildings" component={Buildings} />
-                            <Route path="/building/:id" component={Building} />
-                            <Route path="/manage" component={Manage} />
+                            {/* <Route path="/building/:id" component={Building} /> */}
+                            {/* <Route path="/manage" component={Manage} /> */}
                             <Route path="/section/:id" component={Section} />
                             <Route path="/flowchart" component={Flowchart} />
                         </div>
@@ -68,7 +63,11 @@ class ConnectedApp extends Component {
         }
     }
 }
-const App = withRouter(connect((store) => {
-    return store.user;
-})(ConnectedApp));
-export default App;
+
+const mapStateToProps = ({user}) => {
+    return {
+        user: user.user
+    }
+};
+
+export default connect(mapStateToProps, {getUser})(App);

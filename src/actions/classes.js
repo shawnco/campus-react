@@ -1,3 +1,5 @@
+import Api from '../api';
+
 export const GET_CLASSES = 'get_classes';
 
 export function getClasses() {

@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {DataTable} from 'primereact/components/datatable/DataTable';
 import {Column} from 'primereact/components/column/Column';
-import BuildingsService from '../../services/buildings.js';
 import {Link} from 'react-router-dom';
 
 class Buildings extends Component {
