@@ -18,7 +18,7 @@ class Classes extends Component {
         return <div className='panel'>
             <div className='panel-heading'>Classes</div>
             <div className='panel-body'>
-                <DataTable value={this.props.classes.classes}>
+                <DataTable value={this.props.classes}>
                     <Column field='name' header='Name' />
                 </DataTable>
             </div>
@@ -26,14 +26,12 @@ class Classes extends Component {
     }
 }
 
-const mapStateToProps = ({classes, user}) => {
+const mapStateToProps = ({classes}) => {
     return {
-        classes: classes.classes,
-        user: user.user
+        classes: classes.classes
     };
 }
 
 export default connect(mapStateToProps, {
-    getClasses,
-    getUser
+    getClasses
 })(Classes);
