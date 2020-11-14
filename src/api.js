@@ -7,6 +7,7 @@ export default class Api {
     }
 
     static post(url, data) {
+        console.log(api_url + url, data)
         return axios.get(api_url + url, data);
     }
 

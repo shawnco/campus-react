@@ -11,12 +11,14 @@ class Menu extends Component {
 
     componentDidMount() {
         // Get the pages for this user
-        this.props.getPages();
+        const {user} = this.props;
+        this.props.getPages(user.lavel);
     }
 
     render() {
+        const {pages} = this.props;
         return <div className="col-xs-12 menu">
-            {this.state.pages.map((value, index) => {
+            {pages.map((value, index) => {
                 return <MenuButton route={value.route} name={value.name} index={value.name} key={index.toString()} />
             })}
         </div>
@@ -25,6 +27,7 @@ class Menu extends Component {
 
 const mapStateToProps = ({user}) => {
     return {
+        user: user.user,
         pages: user.pages
     }
 }

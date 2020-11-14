@@ -3,6 +3,7 @@ import buildings from './buildings';
 import classes from './classes';
 import majors from './majors';
 import user from './user';
+import rooms from './rooms';
 // import manage from './manage';
 import error from './error';
 
@@ -12,5 +13,6 @@ export default combineReducers({
     majors,
     user,
     // manage,
-    error
+    error,
+    rooms
 });

@@ -5,13 +5,16 @@ import {Route, withRouter} from 'react-router-dom';
 import Header from './components/header/Header';
 import Menu from './components/menu/Menu';
 import Classes from './components/classes/Classes';
+import Login from './components/login/login';
 import Majors from './components/majors/Majors';
 // import Manage from './components/manage/Manage';
 import Home from './components/home/Home';
 import Buildings from './components/buildings/Buildings';
-// import Building from './components/building/Building';
+import Building from './components/building/Building';
 import Section from './components/section/Section';
 import Flowchart from './components/flowchart/Flowchart';
+import Authenticated from './components/login/authenticated';
+import Level from './components/login/level';
 import {getUser} from './actions/user';
 
 class App extends Component {
@@ -20,7 +23,7 @@ class App extends Component {
     }
 
     componentDidMount() {
-        this.props.getUser(1);
+        // this.props.getUser(1);
     }
 
 
@@ -32,19 +35,26 @@ class App extends Component {
                         <div className="col-xs-12">
                             <Header />
                         </div>
-                        {this.makeMenu()}
-                        <div className="col-xs-12">
-                        </div>
-                        <div className="col-xs-12">
-                            <Route path="/home" component={Home} />
-                            <Route path="/classes" component={Classes} />
-                            <Route path="/majors" component={Majors} />
-                            <Route path="/buildings" component={Buildings} />
-                            {/* <Route path="/building/:id" component={Building} /> */}
-                            {/* <Route path="/manage" component={Manage} /> */}
-                            <Route path="/section/:id" component={Section} />
-                            <Route path="/flowchart" component={Flowchart} />
-                        </div>
+                        <Authenticated>
+                            {this.makeMenu()}
+                            <div className="col-xs-12">
+                            </div>
+                            <div className="col-xs-12">
+                                <Level threshold={100}>
+                                    <Route path="/home" component={Home} />
+                                    <Route path="/classes" component={Classes} />
+                                    <Route path="/majors" component={Majors} />
+                                    <Route path="/buildings" component={Buildings} />
+                                    {/* <Route path="/manage" component={Manage} /> */}
+                                    <Route path="/section/:id" component={Section} />
+                                    <Route path="/flowchart" component={Flowchart} />
+                                </Level>
+                                <Level threshold={300}>
+                                    <Route path="/building/:id" component={Building} />
+                                </Level>
+                            </div>
+                        </Authenticated>
+                        <Route path='/login' component={Login} />
                     </div>
                 </div>
             </div>

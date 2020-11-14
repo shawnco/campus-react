@@ -2,7 +2,7 @@ import Api from '../api';
 
 export const GET_ROOMS = 'get_rooms';
 
-export function getRooms(id) {
+export function getBuildingRooms(id) {
     return dispatch => {
         Api.get(`building/${id}/rooms`).then(res => {
             return dispatch({

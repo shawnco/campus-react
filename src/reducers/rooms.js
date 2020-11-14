@@ -1,4 +1,4 @@
-import {GET_ROOMS} from '../actions/rooms';
+import {GET_ROOMS, GET_BUILDING_ROOMS} from '../actions/rooms';
 
 const initial = {
     rooms: []

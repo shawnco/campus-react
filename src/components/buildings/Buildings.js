@@ -3,10 +3,15 @@ import {connect} from 'react-redux';
 import {DataTable} from 'primereact/components/datatable/DataTable';
 import {Column} from 'primereact/components/column/Column';
 import {Link} from 'react-router-dom';
+import {getBuildings} from '../../actions/buildings';
 
 class Buildings extends Component {
     constructor(props) {
         super(props);
+    }
+
+    componentDidMount() {
+        this.props.getBuildings();
     }
 
     nameTemplate(row, column) {
@@ -19,7 +24,7 @@ class Buildings extends Component {
         return <div className='panel'>
             <div className='panel-heading'>Buildings</div>
             <div className='panel-body'>
-                <DataTable value={this.state.buildings}>
+                <DataTable value={buildings}>
                     <Column field='name' header='Name' body={this.nameTemplate} />
                 </DataTable>
             </div>
@@ -33,4 +38,6 @@ const mapStateToProps = ({buildings}) => {
     };
 }
 
-export default connect(mapStateToProps, null)(Buildings);
+export default connect(mapStateToProps, {
+    getBuildings
+})(Buildings);

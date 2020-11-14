@@ -1,7 +1,8 @@
 import {
     GET_USER,
     GET_PAGES,
-    GET_SECTIONS
+    GET_SECTIONS,
+    GET_LOGIN
 } from '../actions/user';
 
 const initial = {
@@ -18,6 +19,8 @@ export default function(state = initial, action) {
             return {...state, pages: action.payload};
         case GET_SECTIONS:
             return {...state, sections: action.payload};
+        case GET_LOGIN:
+            return {...state, user: action.payload};
     }
     return state;
 }

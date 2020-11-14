@@ -11,6 +11,7 @@ app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
+app.use(bodyParser.json());
 
 var db = new sqlite3.Database('server/db/campus-react.db');
 
@@ -23,7 +24,7 @@ app.get('/', function (req, res) {
 });
 
 // BUILDING
-app.get('/building/:id', function(req, res) {
+app.get('/api/building/:id', function(req, res) {
     var id = req.params.id;
     db.get("SELECT * FROM building WHERE id = ?", [id], function(err, rows) {
         if(err){
@@ -35,7 +36,7 @@ app.get('/building/:id', function(req, res) {
     });
 });
 
-app.get('/building/classes/:id', function(req, res){
+app.get('/api/building/:id/classes', function(req, res){
     var id = req.params.id;
     db.all("SELECT * FROM v_class_building WHERE id = ?", [id], function(err, rows){
         if(err){
@@ -47,7 +48,7 @@ app.get('/building/classes/:id', function(req, res){
 });
 
 // BUILDINGS
-app.get('/buildings/list', function(req, res) {
+app.get('/api/buildings/list', function(req, res) {
     db.all("SELECT * FROM building", function(err, rows) {
         if(err){
             console.log(err);
@@ -59,7 +60,7 @@ app.get('/buildings/list', function(req, res) {
 });
 
 // CLASSES
-app.get('/classes/list', function (req, res) {
+app.get('/api/classes/list', function (req, res) {
     db.all("SELECT * FROM class", function (err, rows) {
         if (err) {
             console.log(err);
@@ -71,7 +72,7 @@ app.get('/classes/list', function (req, res) {
 });
 
 // FLOWCHART
-app.get('/flowchart/:id', function(req, res){
+app.get('/api/flowchart/:id', function(req, res){
     var id = req.params.id;
     db.all("SELECT * FROM class_dependency WHERE major_id = ?", [id], function(err,rows){
         if(err){
@@ -92,7 +93,7 @@ app.get('/flowchart/:id', function(req, res){
 })
 
 // ---- MAJORS
-app.get('/majors/list', function (req, res) {
+app.get('/api/majors/list', function (req, res) {
     db.all("SELECT * FROM major", function (err, rows) {
         if (err) {
             console.log(err);
@@ -104,7 +105,7 @@ app.get('/majors/list', function (req, res) {
 })
 
 // ---- PAGES
-app.get('/pages/:level', function(req, res) {
+app.get('/api/pages/:level', function(req, res) {
     var level = req.params.level;
     db.all("SELECT * FROM pages WHERE user_level <= ? AND menu = 1", [level], function(err, rows) {
         if(err){
@@ -116,7 +117,7 @@ app.get('/pages/:level', function(req, res) {
 });
 
 // ---- PROFESSOR
-app.get('/professor/sections/:id', function(req, res){
+app.get('/api/professor/sections/:id', function(req, res){
     var id = req.params.id;
     db.all("SELECT * FROM v_professor_section WHERE professor_id = ?", [id], function(err, rows){
         if(err){
@@ -129,7 +130,7 @@ app.get('/professor/sections/:id', function(req, res){
 })
 
 // ---- ROOMS
-app.get('/rooms/:building', function(req, res) {
+app.get('/api/building/:id/rooms', function(req, res) {
     var building = req.params.building;
     db.all("SELECT * FROM room WHERE building_id = ?", [building], function(err, rows) {
         if(err){
@@ -141,7 +142,7 @@ app.get('/rooms/:building', function(req, res) {
 });
 
 // ---- USERS
-app.get('/user/:id', function(req, res) {
+app.get('/api/user/:id', function(req, res) {
     var id = req.params.id;
     db.get("SELECT * FROM user WHERE id = ?", [id], function(err, rows) {
         if(err){
@@ -152,7 +153,24 @@ app.get('/user/:id', function(req, res) {
     });
 });
 
+app.get('/api/login/:username/:password', function(req, res) {
+    // Yes I know this is bad but it's just a demo
+    const {username, password} = req.params;
+    db.get("SELECT * FROM user WHERE username = ? AND password = ?", [username, password], function(err, rows) {
+        if (err) {
+            console.log(err);
+            res.end(JSON.stringify(false));
+        } else {
+            if (!rows || rows.length < 1) {
+                res.end(JSON.stringify(false));
+            } else {
+                res.end(JSON.stringify(rows));
+            }
+        }
+    });
+});
 
-app.listen(process.env.PORT || 8080, function(){
+
+app.listen(5021 || process.env.PORT, function(){
     console.log('ACTIVE');
 });
