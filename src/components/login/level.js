@@ -11,6 +11,7 @@ class Level extends Component {
         const {threshold, children} = this.props;
         const {level} = this.props.user;
         if (level < threshold) {
+            console.log('lol outta here')
             return <Redirect to='/home' />
         } else {
             return children;
