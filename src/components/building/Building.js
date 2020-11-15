@@ -41,6 +41,7 @@ class Building extends Component {
                 <div className="panel-heading">Classes</div>
                 <div className="panel-body">
                     <DataTable value={this.props.classes}>
+                        <Column field="code" header="Code" />
                         <Column field="name" header="Name" />
                     </DataTable>
                 </div>

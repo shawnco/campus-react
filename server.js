@@ -38,7 +38,13 @@ app.get('/api/building/:id', function(req, res) {
 
 app.get('/api/building/:id/classes', function(req, res){
     var id = req.params.id;
-    db.all("SELECT * FROM v_class_building WHERE id = ?", [id], function(err, rows){
+    db.all(`SELECT DISTINCT c.name, c.code
+        FROM building b
+        LEFT JOIN room r ON r.building_id = b.id
+        LEFT JOIN section s ON s.room = r.id
+        LEFT JOIN class c ON s.class_id = c.id
+        WHERE b.id = ?
+        ORDER BY c.code`, [id], function(err, rows){
         if(err){
             res.end(JSON.stringify(false));
         }else{
@@ -131,8 +137,8 @@ app.get('/api/professor/sections/:id', function(req, res){
 
 // ---- ROOMS
 app.get('/api/building/:id/rooms', function(req, res) {
-    var building = req.params.building;
-    db.all("SELECT * FROM room WHERE building_id = ?", [building], function(err, rows) {
+    var id = req.params.id;
+    db.all("SELECT * FROM room WHERE building_id = ?", [id], function(err, rows) {
         if(err){
             res.end(JSON.stringify(false));
         }else{
