@@ -20,6 +20,7 @@ class Majors extends Component {
                 <DataTable value={this.props.majors}>
                     <Column field='code' header='Code' />
                     <Column field='name' header='Name' />
+                    <Column field='description' header='Description' />
                 </DataTable>
             </div>
         </div>
