@@ -18,6 +18,7 @@ class Majors extends Component {
             <div className='panel-heading'>Majors</div>
             <div className='panel-body'>
                 <DataTable value={this.props.majors}>
+                    <Column field='code' header='Code' />
                     <Column field='name' header='Name' />
                 </DataTable>
             </div>

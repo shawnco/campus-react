@@ -67,7 +67,7 @@ app.get('/api/buildings/list', function(req, res) {
 
 // CLASSES
 app.get('/api/classes/list', function (req, res) {
-    db.all("SELECT * FROM class", function (err, rows) {
+    db.all("SELECT * FROM class ORDER BY code ASC", function (err, rows) {
         if (err) {
             console.log(err);
             res.end(JSON.stringify(false));
@@ -100,7 +100,7 @@ app.get('/api/flowchart/:id', function(req, res){
 
 // ---- MAJORS
 app.get('/api/majors/list', function (req, res) {
-    db.all("SELECT * FROM major", function (err, rows) {
+    db.all("SELECT * FROM major ORDER BY code ASC", function (err, rows) {
         if (err) {
             console.log(err);
             res.end(JSON.stringify(false));
