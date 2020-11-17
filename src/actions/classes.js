@@ -2,6 +2,7 @@ import Api from '../api';
 
 export const GET_CLASSES = 'get_classes';
 export const GET_BUILDING_CLASSES = 'get_building_classes';
+export const GET_MAJOR_CLASSES = 'get_major_classes';
 
 export function getClasses() {
     return dispatch => {
@@ -19,6 +20,17 @@ export function getBuildingClasses(id) {
         Api.get(`building/${id}/classes`).then(res => {
             return dispatch({
                 type: GET_BUILDING_CLASSES,
+                payload: res.data
+            });
+        });
+    }
+}
+
+export function getMajorClasses(id) {
+    return dispatch => {
+        Api.get(`major/${id}/classes`).then(res => {
+            return dispatch({
+                type: GET_MAJOR_CLASSES,
                 payload: res.data
             });
         });

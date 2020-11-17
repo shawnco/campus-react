@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
 import {DataTable} from 'primereact/components/datatable/DataTable';
 import {Column} from 'primereact/components/column/Column';
 import _ from 'lodash';
@@ -19,6 +20,15 @@ class Building extends Component {
             this.props.getBuildingClasses(id);
             this.props.getBuildingRooms(id);
         }
+    }
+
+    codeCell(rowData) {
+        console.log('row data',rowData)
+        return <Link to={`/class/${rowData.id}`}>{rowData.code}</Link>
+    }
+
+    nameCell(rowData) {
+        return <Link to={`/class/${rowData.id}`}>{rowData.name}</Link>
     }
 
     renderRoomTable() {
@@ -41,8 +51,8 @@ class Building extends Component {
                 <div className="panel-heading">Classes</div>
                 <div className="panel-body">
                     <DataTable value={this.props.classes}>
-                        <Column field="code" header="Code" />
-                        <Column field="name" header="Name" />
+                        <Column field="code" header="Code" body={this.codeCell} />
+                        <Column field="name" header="Name" body={this.nameCell} />
                     </DataTable>
                 </div>
             </div>

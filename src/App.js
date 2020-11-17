@@ -5,8 +5,10 @@ import {Route, withRouter} from 'react-router-dom';
 import Header from './components/header/Header';
 import Menu from './components/menu/Menu';
 import Classes from './components/classes/Classes';
+import Class from './components/classes/class';
 import Login from './components/login/login';
 import Majors from './components/majors/Majors';
+import Major from './components/majors/major';
 // import Manage from './components/manage/Manage';
 import Home from './components/home/Home';
 import Buildings from './components/buildings/Buildings';
@@ -41,12 +43,14 @@ class App extends Component {
                             </div>
                             <div className="col-xs-12">
                                 <Route path="/home" component={Home} />
+                                <Route path='/class/:id' component={Class} />
                                 <Route path="/classes" component={Classes} />
                                 <Route path="/buildings" component={Buildings} />
                                 {/* <Route path="/manage" component={Manage} /> */}
                                 <Route path="/section/:id" component={Section} />
                                 <Route path="/flowchart" component={Flowchart} />
                                 <Route path="/building/:id" component={Building} />
+                                <Route path='/major/:id' component={Major} />
                                 <Route path="/majors" component={Majors} />
                             </div>
                         </Authenticated>

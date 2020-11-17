@@ -3,45 +3,48 @@ import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {DataTable} from 'primereact/components/datatable/DataTable';
 import {Column} from 'primereact/components/column/Column';
-import {getMajors} from '../../actions/majors';
+import _ from 'lodash';
+import {getMajorClasses} from '../../actions/classes';
 
-class Majors extends Component {
+class Major extends Component {
     constructor(props) {
         super(props);
     }
 
     componentDidMount() {
-        this.props.getMajors();
+        const id = _.get(this.props, 'match.params.id', null);
+        if (id) {
+            this.props.getMajorClasses(id);
+        }
     }
 
     codeCell(rowData) {
-        return <Link to={`/major/${rowData.id}`}>{rowData.code}</Link>
+        return <Link to={`/class/${rowData.id}`}>{rowData.id}</Link>
     }
 
     nameCell(rowData) {
-        return <Link to={`/major/${rowData.id}`}>{rowData.name}</Link>
+        return <Link to={`/class/${rowData.id}`}>{rowData.name}</Link>
     }
 
     render() {
         return <div className='panel'>
-            <div className='panel-heading'>Majors</div>
+            <div className='panel-heading'>Classes</div>
             <div className='panel-body'>
-                <DataTable value={this.props.majors}>
+                <DataTable value={this.props.classes}>
                     <Column field='code' header='Code' body={this.codeCell} />
                     <Column field='name' header='Name' body={this.nameCell} />
-                    <Column field='description' header='Description' />
                 </DataTable>
             </div>
         </div>
     }
 }
 
-const mapStateToProps = ({majors}) => {
+const mapStateToProps = ({classes}) => {
     return {
-        majors: majors.majors
+        classes: classes.classes
     };
 }
 
 export default connect(mapStateToProps, {
-    getMajors
-})(Majors);
+    getMajorClasses
+})(Major);

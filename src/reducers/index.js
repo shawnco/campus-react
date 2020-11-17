@@ -6,6 +6,7 @@ import user from './user';
 import rooms from './rooms';
 // import manage from './manage';
 import error from './error';
+import sections from './sections';
 
 export default combineReducers({
     buildings,
@@ -14,5 +15,6 @@ export default combineReducers({
     user,
     // manage,
     error,
-    rooms
+    rooms,
+    sections
 });

@@ -38,7 +38,7 @@ app.get('/api/building/:id', function(req, res) {
 
 app.get('/api/building/:id/classes', function(req, res){
     var id = req.params.id;
-    db.all(`SELECT DISTINCT c.name, c.code
+    db.all(`SELECT DISTINCT c.*
         FROM building b
         LEFT JOIN room r ON r.building_id = b.id
         LEFT JOIN section s ON s.room = r.id
@@ -52,6 +52,22 @@ app.get('/api/building/:id/classes', function(req, res){
         }
     });
 });
+
+// SECTIONS
+app.get('/api/class/:id/sections', (req, res) => {
+    var id = req.params.id;
+    db.all(`SELECT s.section_letter, r.number, b.name
+        FROM section s
+        LEFT JOIN room r ON s.room = r.id
+        LEFT JOIN building b ON r.building_id = b.id
+        WHERE s.class_id = ?`, [id], (err, rows) => {
+        if (err) {
+            res.end(JSON.stringify(false));
+        } else {
+            res.end(JSON.stringify(rows));
+        }
+    });
+})
 
 // BUILDINGS
 app.get('/api/buildings/list', function(req, res) {
@@ -101,6 +117,18 @@ app.get('/api/flowchart/:id', function(req, res){
 // ---- MAJORS
 app.get('/api/majors/list', function (req, res) {
     db.all("SELECT * FROM major ORDER BY code ASC", function (err, rows) {
+        if (err) {
+            console.log(err);
+            res.end(JSON.stringify(false));
+        } else {
+            res.end(JSON.stringify(rows));
+        }
+    })
+})
+
+app.get('/api/major/:id/classes', (req, res) => {
+    var id = req.params.id;
+    db.all('SELECT * FROM class WHERE major = ?', [id], (err, rows) => {
         if (err) {
             console.log(err);
             res.end(JSON.stringify(false));
