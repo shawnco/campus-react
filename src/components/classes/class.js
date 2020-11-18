@@ -27,7 +27,7 @@ class Class extends Component {
 
     render() {
         return <div className='panel'>
-            <div className='panel-heading'>Majors</div>
+            <div className='panel-heading'>Class</div>
             <div className='panel-body'>
                 <DataTable value={this.props.sections}>
                     <Column field='section' header='Section' body={this.sectionCell} />
