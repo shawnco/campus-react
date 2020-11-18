@@ -19,9 +19,7 @@ app.get('/ping', function (req, res) {
  return res.send('pong');
 });
 
-app.get('/', function (req, res) {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
+
 
 // BUILDING
 app.get('/api/building/:id', function(req, res) {
@@ -93,6 +91,17 @@ app.get('/api/classes/list', function (req, res) {
     });
 });
 
+app.get('/api/class/:id', (req, res) => {
+    db.get('SELECT * FROM class WHERE id = ?', [req.params.id], (err, rows) => {
+        if (err) {
+            console.log(err);
+            res.end(JSON.stringify(false));
+        } else {
+            res.end(JSON.stringify(rows));
+        }
+    });
+});
+
 // FLOWCHART
 app.get('/api/flowchart/:id', function(req, res){
     var id = req.params.id;
@@ -123,6 +132,17 @@ app.get('/api/majors/list', function (req, res) {
         } else {
             res.end(JSON.stringify(rows));
         }
+    })
+})
+
+app.get('/api/major/:id', (req, res) => {
+    db.get('SELECT * FROM major WHERE id = ?', [req.params.id], (err, rows) => {
+        if (err) {
+            console.log(err);
+            res.end(JSON.stringify(false));
+        } else {
+            res.end(JSON.stringify(rows));
+        }        
     })
 })
 
@@ -202,6 +222,10 @@ app.get('/api/login/:username/:password', function(req, res) {
             }
         }
     });
+});
+
+app.get('*', function (req, res) {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
 

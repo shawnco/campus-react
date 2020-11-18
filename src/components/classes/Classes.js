@@ -24,7 +24,7 @@ class Classes extends Component {
 
     render() {
         return <div className='panel'>
-            <div className='panel-heading'>Classes</div>
+            <div className='panel-heading'>All Classes</div>
             <div className='panel-body'>
                 <DataTable value={this.props.classes}>
                     <Column field='code' header='Code' body={this.codeCell} />

@@ -34,7 +34,7 @@ class Building extends Component {
     renderRoomTable() {
         if(this.props.rooms){
             return <div className="panel">
-                <div className="panel-heading">{_.get(this.props, 'building.name', '')}</div>
+                <div className="panel-heading">{_.get(this.props, 'building.name', '')} Hall</div>
                 <div className="panel-body">
                     <DataTable value={this.props.rooms}>
                         <Column field="number" header="Number" />
@@ -48,7 +48,7 @@ class Building extends Component {
     renderClassesTable() {
         if(this.props.classes){
             return <div className="panel">
-                <div className="panel-heading">Classes</div>
+                <div className="panel-heading">Classes in {_.get(this.props, 'building.name', '')} Hall</div>
                 <div className="panel-body">
                     <DataTable value={this.props.classes}>
                         <Column field="code" header="Code" body={this.codeCell} />

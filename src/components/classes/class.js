@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import _ from 'lodash';
 import {DataTable} from 'primereact/components/datatable/DataTable';
 import {Column} from 'primereact/components/column/Column';
+import {getClass} from '../../actions/classes';
 import {getSections} from '../../actions/sections';
 
 class Class extends Component {
@@ -14,6 +15,7 @@ class Class extends Component {
         const id = _.get(this.props, 'match.params.id', null);
         if (id) {
             this.props.getSections(id);
+            this.props.getClass(id);
         }
     }
 
@@ -27,7 +29,7 @@ class Class extends Component {
 
     render() {
         return <div className='panel'>
-            <div className='panel-heading'>Class</div>
+            <div className='panel-heading'>{_.get(this.props, 'class.name', '')}</div>
             <div className='panel-body'>
                 <DataTable value={this.props.sections}>
                     <Column field='section' header='Section' body={this.sectionCell} />
@@ -38,10 +40,11 @@ class Class extends Component {
     }
 }
 
-const mapStateToProps = ({sections}) => {
+const mapStateToProps = ({classes, sections}) => {
     return {
+        class: classes.class,
         sections: sections.sections
     };
 }
 
-export default connect(mapStateToProps, {getSections})(Class);
+export default connect(mapStateToProps, {getClass, getSections})(Class);
