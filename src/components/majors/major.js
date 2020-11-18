@@ -19,7 +19,7 @@ class Major extends Component {
     }
 
     codeCell(rowData) {
-        return <Link to={`/class/${rowData.id}`}>{rowData.id}</Link>
+        return <Link to={`/class/${rowData.id}`}>{rowData.code}</Link>
     }
 
     nameCell(rowData) {
