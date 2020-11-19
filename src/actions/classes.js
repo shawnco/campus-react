@@ -7,7 +7,7 @@ export const GET_MAJOR_CLASSES = 'get_major_classes';
 
 export function getClasses() {
     return dispatch => {
-        Api.get(`classes/list`).then(res => {
+        Api.get(`class/list`).then(res => {
             return dispatch({
                 type: GET_CLASSES,
                 payload: res.data

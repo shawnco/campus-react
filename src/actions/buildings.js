@@ -16,7 +16,7 @@ export function getBuilding(id) {
 
 export function getBuildings() {
     return dispatch => {
-        Api.get('buildings/list').then(res => {
+        Api.get('building/list').then(res => {
             return dispatch({
                 type: GET_BUILDINGS,
                 payload: res.data
