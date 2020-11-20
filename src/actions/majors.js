@@ -16,7 +16,7 @@ export function getMajor(id) {
 
 export function getMajors() {
     return dispatch => {
-        Api.get('majors/list').then(res => {
+        Api.get('major/list').then(res => {
             dispatch({
                 type: GET_MAJORS,
                 payload: res.data
